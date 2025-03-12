@@ -23,7 +23,7 @@ public abstract class User{
         this.userName = userName;
     }
 
-    public String getPassword() {
+    public  String getPassword() {
         return password;
     }
 
