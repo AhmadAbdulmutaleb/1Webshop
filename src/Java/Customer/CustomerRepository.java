@@ -120,9 +120,10 @@ public class CustomerRepository extends Repository {
             pstmt.setString(5, password);
             pstmt.setInt(6,id);
 
-            pstmt.executeUpdate();
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0; // returnerar ture om minst en rad ändras.
         }
-        return false;
+
     }
 
 

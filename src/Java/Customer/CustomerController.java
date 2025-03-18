@@ -60,26 +60,56 @@ public class CustomerController {
                         customerService.showAllUsers();
                         System.out.println(GREEN + SUCCESS + " Alla kunder listade framgångsrikt!" + RESET);
                         break;
+
                     case "2":
                         System.out.println(BOLD + CYAN + "\n=== Sök kund " + SEARCH + " ===" + RESET);
                         System.out.print(YELLOW + ARROW + " Ange ID: " + RESET);
                         String idInput = scanner.nextLine();
                         int id = Integer.parseInt(idInput);
-                        customerService.showUserById(id);
-                        System.out.println(GREEN + SUCCESS + " Kund hittad!" + RESET);
+                        Customer customer1 = customerService.showUserById(id);
+                        if (customer1 != null){
+                            System.out.println(GREEN + SUCCESS + " Kund hittad!" + RESET);
+                            break;
+                        }
+
+                        else {
+                            System.out.println(" Hittar ingen kund med ID = " + id);
+                        }
                         break;
                     case "3":
                         System.out.println(BOLD + CYAN + "\n=== Lägg till ny kund " + ADD + " ===" + RESET);
                         System.out.print(YELLOW + ARROW + " Namn: " + RESET);
                         String name = scanner.nextLine();
+                        if (name == null|| name.trim().isEmpty()){
+                            System.out.println("Namnet får inte vara tom");
+                            break;
+                        }
                         System.out.print(YELLOW + ARROW + " Email: " + RESET);
                         String email = scanner.nextLine();
+                        if (email == null || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                            System.out.println("E-mail är Ogiltig");
+                            break;
+                        }
                         System.out.print(YELLOW + ARROW + " Telefon: " + RESET);
                         String phone = scanner.nextLine();
+                        if (phone == null || !phone.matches("\\d{6,}")){
+                            System.out.println("Ogiltigt Telefonnr.");
+                            break;
+                        }
+
                         System.out.print(YELLOW + ARROW + " Adress: " + RESET);
                         String address = scanner.nextLine();
+                        if (address == null || address.trim().isEmpty()) {
+                            System.out.println("Ogiltigt address!");
+                            break;
+                        }
                         System.out.print(YELLOW + ARROW + " Lösenord: " + RESET);
                         String password = scanner.nextLine();
+                        if (password == null || password.length() < 6 || !password.matches(".*[a-zA-Z].*") || !password.matches(".*\\d.*")) {
+                            System.out.println("Lösenordet måste innhålla bokstäver och siffror och vara minst 6 tecken.");
+                            break;
+                        }
+
                         customerService.addCustomer(name, email, phone, address, password);
                         System.out.println(GREEN + SUCCESS + " Ny kund tillagd framgångsrikt!" + RESET);
                         break;
